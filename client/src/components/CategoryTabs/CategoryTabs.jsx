@@ -1,7 +1,9 @@
 import s from './CategoryTabs.module.scss';
 import { categories, items } from '../../menuData';
+import { useLang, pick } from '../../LangContext';
 
 export default function CategoryTabs({ active, onChange }) {
+  const lang = useLang();
   return (
     <div className={s.wrapper}>
       <div className={s.list}>
@@ -11,7 +13,7 @@ export default function CategoryTabs({ active, onChange }) {
             className={`${s.tab} ${active === cat.id ? s.active : ''}`}
             onClick={() => onChange(cat.id)}
           >
-            {cat.label}
+            {pick(cat, 'label', lang)}
             <span className={s.count}>
               {items.filter(i => i.categoryId === cat.id).length}
             </span>

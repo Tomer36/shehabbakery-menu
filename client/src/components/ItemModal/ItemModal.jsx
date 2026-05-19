@@ -1,15 +1,22 @@
 import { useState, useEffect } from 'react';
 import s from './ItemModal.module.scss';
 import { fmt } from '../../utils';
+import { useLang, pick } from '../../LangContext';
 
 export default function ItemModal({ item, onClose }) {
   const [imgError, setImgError] = useState(false);
+  const lang = useLang();
 
   useEffect(() => {
     const onKey = (e) => { if (e.key === 'Escape') onClose(); };
     document.addEventListener('keydown', onKey);
     return () => document.removeEventListener('keydown', onKey);
   }, [onClose]);
+
+  const ui = {
+    sizes:  lang === 'ar' ? 'أحجام'   : 'גדלים',
+    extras: lang === 'ar' ? 'إضافات'  : 'תוספות',
+  };
 
   return (
     <div className={s.overlay} onClick={onClose}>
@@ -20,7 +27,7 @@ export default function ItemModal({ item, onClose }) {
             <img
               className={s.image}
               src={item.img}
-              alt={item.name}
+              alt={pick(item, 'name', lang)}
               onError={() => setImgError(true)}
             />
           ) : (
@@ -31,20 +38,20 @@ export default function ItemModal({ item, onClose }) {
 
         <div className={s.body}>
           <div className={s.header}>
-            <h2 className={s.name}>{item.name}</h2>
+            <h2 className={s.name}>{pick(item, 'name', lang)}</h2>
             {!item.sizes && <span className={s.price}>{fmt(item.price)}</span>}
           </div>
 
-          {item.desc && <p className={s.desc}>{item.desc}</p>}
-          {item.note && <span className={s.note}>{item.note}</span>}
+          {pick(item, 'desc', lang) && <p className={s.desc}>{pick(item, 'desc', lang)}</p>}
+          {pick(item, 'note', lang) && <span className={s.note}>{pick(item, 'note', lang)}</span>}
 
           {item.sizes?.length > 0 && (
             <div className={s.sizesSection}>
-              <span className={s.sizesLabel}>גדלים</span>
+              <span className={s.sizesLabel}>{ui.sizes}</span>
               <div className={s.sizesList}>
                 {item.sizes.map((size, i) => (
                   <div key={i} className={s.sizePill}>
-                    <span className={s.sizeLabel}>{size.label}</span>
+                    <span className={s.sizeLabel}>{pick(size, 'label', lang)}</span>
                     <span className={s.sizePrice}>{fmt(size.price)}</span>
                   </div>
                 ))}
@@ -54,11 +61,11 @@ export default function ItemModal({ item, onClose }) {
 
           {item.extras?.length > 0 && (
             <div className={s.extrasSection}>
-              <span className={s.extrasLabel}>תוספות</span>
+              <span className={s.extrasLabel}>{ui.extras}</span>
               <div className={s.extrasList}>
                 {item.extras.map((extra, i) => (
                   <span key={i} className={s.extraPill}>
-                    {extra.label} +{fmt(extra.price)}
+                    {pick(extra, 'label', lang)} +{fmt(extra.price)}
                   </span>
                 ))}
               </div>

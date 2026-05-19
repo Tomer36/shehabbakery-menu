@@ -5,6 +5,7 @@ import CategoryTabs from './components/CategoryTabs/CategoryTabs';
 import MenuItem from './components/MenuItem/MenuItem';
 import ItemModal from './components/ItemModal/ItemModal';
 import { categories, items } from './menuData';
+import { useLang, pick } from './LangContext';
 
 export default function App() {
   const [activeCategory, setActiveCategory] = useState(categories[0].id);
@@ -17,7 +18,8 @@ export default function App() {
     return () => window.removeEventListener('scroll', onScroll);
   }, []);
 
-  const activeLabel = categories.find(c => c.id === activeCategory)?.label;
+  const lang = useLang();
+  const activeLabel = pick(categories.find(c => c.id === activeCategory) ?? {}, 'label', lang);
 
   return (
     <div className={s.page}>
