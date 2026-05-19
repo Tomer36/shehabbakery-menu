@@ -8,14 +8,14 @@
 }
 
 .main {
-  max-width: 600px;
-  margin: 48px auto;
+  max-width: 520px;
+  margin: 40px auto;
   padding: 0 20px;
   width: 100%;
   flex: 1;
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: 14px;
 }
 
 .heading {
@@ -24,7 +24,7 @@
   font-weight: 700;
   color: $brown;
   text-align: right;
-  margin-bottom: 8px;
+  margin-bottom: 4px;
 
   &::after {
     content: '';
@@ -34,31 +34,42 @@
     width: 48px;
     background: $gold;
     border-radius: 999px;
-    margin-right: 0;
   }
 }
 
 .card {
   background: $white;
   border-radius: $radius-card;
-  padding: 20px 24px;
+  padding: 18px 20px;
   box-shadow: $shadow;
   display: flex;
-  align-items: center;
-  justify-content: space-between;
-  direction: rtl;
+  align-items: flex-start;
   gap: 16px;
+  direction: rtl;
+}
+
+.icon {
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  background: rgba($gold, 0.1);
+  color: $gold;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
 }
 
 .cardInfo {
   display: flex;
   flex-direction: column;
-  gap: 4px;
+  gap: 3px;
   text-align: right;
+  flex: 1;
 }
 
 .label {
-  font-size: 0.75rem;
+  font-size: 0.72rem;
   font-weight: 700;
   color: $gold;
   text-transform: uppercase;
@@ -66,41 +77,24 @@
 }
 
 .value {
-  font-size: 1rem;
+  font-size: 0.95rem;
   font-weight: 600;
   color: $brown;
   line-height: 1.5;
 }
 
-.icon {
-  width: 48px;
-  height: 48px;
-  border-radius: 50%;
-  background: rgba($gold, 0.12);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 1.4rem;
-  flex-shrink: 0;
-}
-
 .link {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  margin-top: 12px;
-  padding: 10px 20px;
-  border-radius: $radius-pill;
-  background: $gold;
-  color: $white;
-  font-size: 0.85rem;
+  display: inline-block;
+  margin-top: 8px;
+  font-size: 0.82rem;
   font-weight: 700;
+  color: $gold;
   text-decoration: none;
-  transition: background 0.2s;
-  align-self: flex-end;
+  border-bottom: 1.5px solid rgba($gold, 0.35);
+  transition: border-color 0.2s;
 
   &:hover {
-    background: $gold-light;
+    border-color: $gold;
   }
 }
 
@@ -114,7 +108,6 @@
     color: $gold;
     font-weight: 600;
     text-decoration: none;
-
     &:hover { opacity: 0.75; }
   }
 }

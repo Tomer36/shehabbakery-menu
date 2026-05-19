@@ -9,6 +9,11 @@ import { useLang, pick } from './LangContext';
 
 export default function App() {
   const [activeCategory, setActiveCategory] = useState(categories[0].id);
+
+  const handleCategoryChange = (id) => {
+    setActiveCategory(id);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
   const [showScrollTop, setShowScrollTop] = useState(false);
   const [selectedItem, setSelectedItem] = useState(null);
 
@@ -24,7 +29,7 @@ export default function App() {
   return (
     <div className={s.page}>
       <Header />
-      <CategoryTabs active={activeCategory} onChange={setActiveCategory} />
+      <CategoryTabs active={activeCategory} onChange={handleCategoryChange} />
 
       <main className={s.main}>
         <div className={s.categoryHeader}>
