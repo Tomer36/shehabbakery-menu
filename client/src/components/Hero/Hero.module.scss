@@ -1,0 +1,26 @@
+@use '../../styles/variables' as *;
+
+.hero {
+  background: $brown;
+  padding: 6px 20px;
+  text-align: center;
+  border-bottom: 1px solid rgba($gold, 0.25);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+
+.title {
+  font-family: $font-heading;
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: $gold;
+  letter-spacing: 0.5px;
+}
+
+.tagline {
+  font-size: 0.75rem;
+  color: rgba($cream, 0.5);
+  letter-spacing: 0.5px;
+}

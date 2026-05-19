@@ -1,0 +1,88 @@
+@use '../../styles/variables' as *;
+
+.header {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  background-color: $brown;
+  border-bottom: 2px solid rgba($gold, 0.5);
+  box-shadow: 0 2px 16px rgba(0, 0, 0, 0.3);
+}
+
+.inner {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 0 20px;
+  height: 86px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  direction: rtl;
+}
+
+.nav {
+  flex: 1;
+  display: flex;
+  justify-content: flex-start;
+  gap: 24px;
+
+  a {
+    color: rgba($cream, 0.85);
+    font-size: 0.9rem;
+    font-weight: 500;
+    transition: color 0.2s;
+
+    &:hover {
+      color: $gold;
+    }
+  }
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+
+  img {
+    height: 70px;
+    width: 70px;
+    object-fit: contain;
+    border-radius: 50%;
+    border: 2px solid $gold;
+    padding: 3px;
+    background: rgba($gold, 0.1);
+    box-shadow: 0 0 0 4px rgba($gold, 0.15);
+    transition: box-shadow 0.2s;
+
+    &:hover {
+      box-shadow: 0 0 0 6px rgba($gold, 0.25);
+    }
+  }
+}
+
+.menuLabel {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  text-decoration: none;
+  gap: 4px;
+
+  &::before {
+    content: '';
+    display: block;
+    width: 24px;
+    height: 2px;
+    background: $gold;
+    border-radius: 2px;
+  }
+
+  span {
+    font-family: $font-heading;
+    font-size: 0.78rem;
+    font-weight: 700;
+    color: rgba($cream, 0.8);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+  }
+}

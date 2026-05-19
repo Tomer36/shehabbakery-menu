@@ -1,0 +1,199 @@
+@use '../../styles/variables' as *;
+
+.overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  background: rgba(0, 0, 0, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  animation: fadeIn 0.2s ease;
+}
+
+.modal {
+  background: $white;
+  border-radius: $radius-card;
+  width: 100%;
+  max-width: 420px;
+  overflow: hidden;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.35);
+  animation: slideUp 0.25s ease;
+}
+
+.imageWrapper {
+  position: relative;
+  height: 260px;
+  background: #fdf6ec;
+  overflow: hidden;
+}
+
+.image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.imageFallback {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 5rem;
+  opacity: 0.15;
+}
+
+.close {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: rgba(0, 0, 0, 0.45);
+  color: $white;
+  font-size: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s;
+
+  &:hover {
+    background: rgba(0, 0, 0, 0.7);
+  }
+}
+
+.body {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.name {
+  font-family: $font-heading;
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: $brown;
+  line-height: 1.3;
+}
+
+.price {
+  flex-shrink: 0;
+  background: $gold;
+  color: $white;
+  font-size: 1rem;
+  font-weight: 700;
+  padding: 4px 14px;
+  border-radius: $radius-pill;
+}
+
+.desc {
+  font-size: 0.9rem;
+  color: rgba($brown-deep, 0.7);
+  line-height: 1.65;
+}
+
+.note {
+  display: inline-block;
+  align-self: flex-start;
+  font-size: 0.78rem;
+  padding: 4px 12px;
+  border-radius: $radius-pill;
+  background: #fef3e2;
+  color: $gold;
+  border: 1px solid rgba($gold, 0.35);
+}
+
+.sizesSection {
+  border-top: 1px solid rgba($gold, 0.15);
+  padding-top: 10px;
+}
+
+.sizesLabel {
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: $gold;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 8px;
+  display: block;
+}
+
+.sizesList {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.sizePill {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 14px;
+  border-radius: $radius-pill;
+  background: rgba($gold, 0.08);
+  border: 1px solid rgba($gold, 0.25);
+
+  .sizeLabel {
+    font-size: 0.82rem;
+    font-weight: 700;
+    color: $brown;
+  }
+
+  .sizePrice {
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: $gold;
+  }
+}
+
+.extrasSection {
+  border-top: 1px solid rgba($gold, 0.15);
+  padding-top: 10px;
+}
+
+.extrasLabel {
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: $gold;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 8px;
+  display: block;
+}
+
+.extrasList {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.extraPill {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: $brown;
+  background: rgba($gold, 0.08);
+  border: 1.5px solid rgba($gold, 0.3);
+  padding: 4px 12px;
+  border-radius: $radius-pill;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+@keyframes slideUp {
+  from { transform: translateY(30px); opacity: 0; }
+  to   { transform: translateY(0);    opacity: 1; }
+}

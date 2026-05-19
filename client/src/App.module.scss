@@ -1,0 +1,86 @@
+@use './styles/variables' as *;
+
+.page {
+  min-height: 100vh;
+  background-color: $cream;
+}
+
+.main {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 28px 20px;
+}
+
+.categoryHeader {
+  margin-bottom: 24px;
+
+  h2 {
+    font-family: $font-heading;
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: $brown;
+  }
+}
+
+.accent {
+  margin-top: 6px;
+  height: 4px;
+  width: 48px;
+  border-radius: 999px;
+  background: $gold;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+
+  @media (min-width: $bp-sm) {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  @media (min-width: $bp-md) {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+.footer {
+  text-align: center;
+  padding: 24px;
+  font-size: 0.8rem;
+  color: rgba($brown, 0.45);
+
+  a {
+    color: $gold;
+    text-decoration: none;
+    font-weight: 600;
+    transition: opacity 0.2s;
+
+    &:hover {
+      opacity: 0.75;
+    }
+  }
+}
+
+.scrollTop {
+  position: fixed;
+  bottom: 24px;
+  left: 24px;
+  z-index: 50;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: $gold;
+  color: $white;
+  font-size: 1.1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 12px rgba($gold, 0.45);
+  transition: background 0.2s, transform 0.2s;
+
+  &:hover {
+    background: $gold-light;
+    transform: translateY(-2px);
+  }
+}
