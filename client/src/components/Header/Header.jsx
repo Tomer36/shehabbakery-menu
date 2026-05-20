@@ -1,4 +1,5 @@
 import { Link, useNavigate, useLocation } from 'react-router-dom';
+import { Phone } from 'lucide-react';
 import { useLang } from '../../LangContext';
 import s from './Header.module.scss';
 
@@ -15,8 +16,8 @@ export default function Header() {
       <div className={s.inner}>
 
         <nav className={s.nav}>
-          <Link to={lang === 'he' ? '/contact' : '/ar/contact'}>
-            {lang === 'he' ? 'צור קשר' : 'تواصل معنا'}
+          <Link to={lang === 'he' ? '/contact' : '/ar/contact'} className={s.contactBtn}>
+            <Phone size={16} />
           </Link>
         </nav>
 

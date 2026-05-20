@@ -32,11 +32,6 @@ export default function App() {
       <CategoryTabs active={activeCategory} onChange={handleCategoryChange} />
 
       <main className={s.main}>
-        <div className={s.categoryHeader}>
-          <h2>{activeLabel}</h2>
-          <div className={s.accent} />
-        </div>
-
         <div className={s.grid}>
           {items.filter(item => item.categoryId === activeCategory).map((item) => (
             <MenuItem key={item.id} item={item} onClick={() => setSelectedItem(item)} />

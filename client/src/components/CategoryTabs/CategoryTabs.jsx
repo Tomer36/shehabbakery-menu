@@ -4,6 +4,12 @@ import { useLang, pick } from '../../LangContext';
 
 export default function CategoryTabs({ active, onChange }) {
   const lang = useLang();
+
+  const handleClick = (e, id) => {
+    onChange(id);
+    e.currentTarget.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
+  };
+
   return (
     <div className={s.wrapper}>
       <div className={s.list}>
@@ -11,7 +17,7 @@ export default function CategoryTabs({ active, onChange }) {
           <button
             key={cat.id}
             className={`${s.tab} ${active === cat.id ? s.active : ''}`}
-            onClick={() => onChange(cat.id)}
+            onClick={(e) => handleClick(e, cat.id)}
           >
             {pick(cat, 'label', lang)}
             <span className={s.count}>

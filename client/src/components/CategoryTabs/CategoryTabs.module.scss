@@ -12,9 +12,10 @@
 .list {
   max-width: 1000px;
   margin: 0 auto;
-  padding: 10px 16px;
+  padding: 12px 20px;
+  scroll-padding-inline: 20px;
   display: flex;
-  gap: 8px;
+  gap: 7px;
   overflow-x: auto;
   scrollbar-width: none;
 
@@ -28,7 +29,7 @@
   display: flex;
   align-items: center;
   gap: 6px;
-  padding: 8px 16px;
+  padding: 9px 12px;
   border-radius: $radius-pill;
   border: 1.5px solid rgba($gold, 0.35);
   background: transparent;
