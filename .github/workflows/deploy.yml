@@ -35,4 +35,4 @@ jobs:
           password: ${{ secrets.FTP_PASSWORD }}
           port: 21
           local-dir: client/dist/
-          server-dir: /home/u333086885/domains/acemaster.online/public_html/
+          server-dir: public_html/
