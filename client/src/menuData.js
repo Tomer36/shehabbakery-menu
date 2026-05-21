@@ -1,5 +1,5 @@
 export const categories = [
-  { id: 'dessert',         label: 'קינוחים',     labelAr: 'حلويات',           order: 1 },
+  { id: 'dessert',         label: 'test',     labelAr: 'حلويات',           order: 1 },
   { id: 'special-morning', label: 'בוקר מיוחד',  labelAr: 'فطور مميز',        order: 2 },
   { id: 'personal-pastry', label: 'מאפה אישי',   labelAr: 'معجنات فردية',     order: 3 },
   { id: 'sandwish',        label: 'סנדוויצ\'ים', labelAr: 'سندويشات',         order: 4 },
