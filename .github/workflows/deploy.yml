@@ -3,7 +3,7 @@ name: Build & Deploy
 on:
   push:
     branches:
-      - master
+      - new-design
 
 jobs:
   deploy:
