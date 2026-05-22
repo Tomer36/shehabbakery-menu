@@ -57,6 +57,16 @@ export function useMenuData() {
           }))
           .sort((a, b) => a.order - b.order);
 
+        const parsePiped = (str, strAr) => {
+          if (!str) return undefined;
+          return str.split('|').map((s, idx) => {
+            const [label, price] = s.split(':');
+            const arPart = strAr?.split('|')[idx] || '';
+            const [labelAr] = arPart.split(':');
+            return { label, labelAr, price: Number(price) };
+          });
+        };
+
         const its = parseCSV(itemText).map(i => ({
           id: i.id,
           categoryId: i.categoryId,
@@ -68,6 +78,8 @@ export function useMenuData() {
           descAr: i.descAr || '',
           note: i.note || '',
           noteAr: i.noteAr || '',
+          sizes: parsePiped(i.sizes, i.sizesAr),
+          extras: parsePiped(i.extras, i.extrasAr),
         }));
 
         setCategories(cats);
