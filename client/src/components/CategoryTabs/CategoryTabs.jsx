@@ -1,8 +1,7 @@
 import s from './CategoryTabs.module.scss';
-import { categories, items } from '../../menuData';
 import { useLang, pick } from '../../LangContext';
 
-export default function CategoryTabs({ active, onChange }) {
+export default function CategoryTabs({ active, onChange, categories, items }) {
   const lang = useLang();
 
   const handleClick = (e, id) => {

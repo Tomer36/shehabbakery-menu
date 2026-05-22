@@ -5,6 +5,13 @@
   background-color: $cream;
 }
 
+.loading {
+  text-align: center;
+  padding: 60px 20px;
+  color: rgba($brown, 0.5);
+  font-size: 1rem;
+}
+
 .main {
   max-width: 1000px;
   margin: 0 auto;

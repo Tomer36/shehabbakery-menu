@@ -4,18 +4,21 @@ import Header from './components/Header/Header';
 import CategoryTabs from './components/CategoryTabs/CategoryTabs';
 import MenuItem from './components/MenuItem/MenuItem';
 import ItemModal from './components/ItemModal/ItemModal';
-import { categories, items } from './menuData';
-import { useLang, pick } from './LangContext';
+import { useMenuData } from './hooks/useMenuData';
+import { useLang } from './LangContext';
 
 export default function App() {
-  const [activeCategory, setActiveCategory] = useState(categories[0].id);
-
-  const handleCategoryChange = (id) => {
-    setActiveCategory(id);
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  };
+  const { categories, items, loading, error } = useMenuData();
+  const [activeCategory, setActiveCategory] = useState(null);
   const [showScrollTop, setShowScrollTop] = useState(false);
   const [selectedItem, setSelectedItem] = useState(null);
+  const lang = useLang();
+
+  useEffect(() => {
+    if (categories.length && !activeCategory) {
+      setActiveCategory(categories[0].id);
+    }
+  }, [categories]);
 
   useEffect(() => {
     const onScroll = () => setShowScrollTop(window.scrollY > 300);
@@ -23,13 +26,34 @@ export default function App() {
     return () => window.removeEventListener('scroll', onScroll);
   }, []);
 
-  const lang = useLang();
-  const activeLabel = pick(categories.find(c => c.id === activeCategory) ?? {}, 'label', lang);
+  const handleCategoryChange = (id) => {
+    setActiveCategory(id);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
+  if (loading) return (
+    <div className={s.page}>
+      <Header />
+      <div className={s.loading}>{lang === 'ar' ? 'جاري تحميل القائمة...' : 'טוען תפריט...'}</div>
+    </div>
+  );
+
+  if (error) return (
+    <div className={s.page}>
+      <Header />
+      <div className={s.loading}>{lang === 'ar' ? 'خطأ في تحميل القائمة' : 'שגיאה בטעינת התפריט'}</div>
+    </div>
+  );
 
   return (
     <div className={s.page}>
       <Header />
-      <CategoryTabs active={activeCategory} onChange={handleCategoryChange} />
+      <CategoryTabs
+        active={activeCategory}
+        onChange={handleCategoryChange}
+        categories={categories}
+        items={items}
+      />
 
       <main className={s.main}>
         <div className={s.grid}>
