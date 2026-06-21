@@ -1,6 +1,7 @@
 name: Build & Deploy
 
 on:
+  workflow_dispatch:
   push:
     branches:
       - new-design
@@ -37,4 +38,4 @@ jobs:
           protocol: ftps
           security: loose
           local-dir: client/dist/
-          server-dir: ./
+          server-dir: public_html/
