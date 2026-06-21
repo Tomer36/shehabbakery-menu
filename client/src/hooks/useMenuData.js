@@ -67,20 +67,29 @@ export function useMenuData() {
           });
         };
 
-        const its = parseCSV(itemText).map(i => ({
-          id: i.id,
-          categoryId: i.categoryId,
-          name: i.name,
-          nameAr: i.nameAr,
-          price: Number(i.price),
-          img: i.img ? `/menu/${i.img}` : '',
-          desc: i.desc || '',
-          descAr: i.descAr || '',
-          note: i.note || '',
-          noteAr: i.noteAr || '',
-          sizes: parsePiped(i.sizes, i.sizesAr),
-          extras: parsePiped(i.extras, i.extrasAr),
-        }));
+        const normalizeStatus = (status) =>
+          ['active', 'sold_out', 'hidden', 'coming_soon'].includes(status)
+            ? status
+            : 'active';
+
+        const its = parseCSV(itemText)
+          .map(i => ({ ...i, status: normalizeStatus(i.status) }))
+          .filter(i => i.status !== 'hidden')
+          .map(i => ({
+            id: i.id,
+            categoryId: i.categoryId,
+            status: i.status,
+            name: i.name,
+            nameAr: i.nameAr,
+            price: Number(i.price),
+            img: i.img ? `/menu/${i.img}` : '',
+            desc: i.desc || '',
+            descAr: i.descAr || '',
+            note: i.note || '',
+            noteAr: i.noteAr || '',
+            sizes: parsePiped(i.sizes, i.sizesAr),
+            extras: parsePiped(i.extras, i.extrasAr),
+          }));
 
         setCategories(cats);
         setItems(its);

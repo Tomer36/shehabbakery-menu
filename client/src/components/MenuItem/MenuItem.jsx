@@ -6,9 +6,18 @@ import { useLang, pick } from '../../LangContext';
 export default function MenuItem({ item, onClick }) {
   const [imgError, setImgError] = useState(false);
   const lang = useLang();
+  const unavailable = item.status !== 'active';
+  const statusLabels = {
+    sold_out: lang === 'ar' ? 'نفد من المخزون' : 'אזל מהמלאי',
+    coming_soon: lang === 'ar' ? 'قريباً' : 'בקרוב',
+  };
 
   return (
-    <div className={s.card} onClick={onClick}>
+    <div
+      className={`${s.card} ${unavailable ? s.unavailable : ''}`}
+      onClick={unavailable ? undefined : onClick}
+      aria-disabled={unavailable}
+    >
       <div className={s.imageWrapper}>
         {!imgError ? (
           <img
@@ -31,6 +40,12 @@ export default function MenuItem({ item, onClick }) {
           <span className={s.price}>{fmt(item.price)}</span>
         )}
       </div>
+
+      {statusLabels[item.status] && (
+        <div className={`${s.statusBadge} ${s[item.status]}`}>
+          {statusLabels[item.status]}
+        </div>
+      )}
 
       <div className={s.body}>
         <h3 className={s.name}>{pick(item, 'name', lang)}</h3>
