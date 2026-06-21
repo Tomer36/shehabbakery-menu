@@ -26,7 +26,7 @@ export default function Header() {
         </Link>
 
         <div className={s.langSwitch}>
-          <Link to={heLink} className={`${s.langBtn} ${lang === 'he' ? s.langActive : ''}`}>vvvvvvvvvvvעב</Link>
+          <Link to={heLink} className={`${s.langBtn} ${lang === 'he' ? s.langActive : ''}`}>עב</Link>
           <Link to={arLink} className={`${s.langBtn} ${lang === 'ar' ? s.langActive : ''}`}>عر</Link>
         </div>
 
