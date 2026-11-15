@@ -66,7 +66,7 @@ html[data-theme='christmas-premium'] {
   // ── Header: deep pine green with one string of twinkling lights (green frame around the red page) ─
   [data-theme-slot='header'] {
     background: linear-gradient(180deg, #1F4430 0%, #132B1D 100%);
-    border-bottom: 1px solid rgba($champagne, 0.6);
+    border-bottom: 2px solid rgba($champagne, 0.6); // keep 2px: the header must stay 88px tall like the base design
 
     // wire + warm-white / red bulbs draped along the top
     &::before,

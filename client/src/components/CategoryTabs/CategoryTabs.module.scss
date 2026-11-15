@@ -2,7 +2,7 @@
 
 .wrapper {
   position: sticky;
-  top: 88px;
+  top: 86px; // tucked 2px under the 88px header (z-index 50) so subpixel rounding on phones never shows a gap
   z-index: 40;
   background: $white;
   border-bottom: 1px solid rgba($gold, 0.2);
