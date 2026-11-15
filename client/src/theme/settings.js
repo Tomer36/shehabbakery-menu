@@ -15,7 +15,10 @@ const PREVIEW_KEY = 'themePreview';
  * returning the same { key: value } object — nothing else needs to change.
  */
 export async function fetchSiteSettings() {
-  const text = await fetch(sheetUrl('settings')).then(r => r.text());
+  // headers=1: otherwise Google may merge the first two rows into one header when they're all text.
+  // Note: Google types each column by its majority — keep column B as Plain text so 'christmas'
+  // isn't dropped next to dates.
+  const text = await fetch(sheetUrl('settings') + '&headers=1').then(r => r.text());
   const rows = parseCSV(text);
   // gviz returns the first sheet when a tab doesn't exist — make sure this is really the settings tab.
   if (!rows.length || !('key' in rows[0]) || !('value' in rows[0])) return {};

@@ -1,19 +1,12 @@
 import './premium.scss';
 
+// The hero is in English on every language page, matching the "Holiday Drinks" category.
+// `subMore` is hidden on phones, so `sub` must read well on its own.
 const copy = {
-  // `subMore` is hidden on phones, so `sub` must read well on its own.
-  he: {
-    eyebrow: 'חדש לחגים',
-    title: 'חורף מתוק בכוס',
-    sub: 'משקאות החג החדשים כבר כאן',
-    subMore: '— חג מולד שמח!',
-  },
-  ar: {
-    eyebrow: 'جديد للأعياد',
-    title: 'شتاء دافئ في كوب',
-    sub: 'مشروبات الأعياد الجديدة وصلت',
-    subMore: '— ميلاد مجيد!',
-  },
+  eyebrow: 'New for the holidays',
+  title: 'Winter in a Cup',
+  sub: 'Our holiday drinks are here',
+  subMore: '— Merry Christmas!',
 };
 
 // Tree lights: [x, y, colour]
@@ -132,13 +125,13 @@ function Bow() {
   );
 }
 
-export default function Hero({ lang }) {
-  const t = copy[lang] ?? copy.he;
+export default function Hero() {
+  const t = copy;
   return (
-    <section className={`xp-hero xp-lang-${lang}`} aria-label={t.title}>
+    <section className="xp-hero" aria-label={t.title}>
       <span className="xp-garland" aria-hidden="true" />
       <Bow />
-      <div className="xp-hero-text">
+      <div className="xp-hero-text" dir="ltr" lang="en">
         <p className="xp-eyebrow">{t.eyebrow}</p>
         <h2 className="xp-title">{t.title}</h2>
         <p className="xp-sub">

@@ -321,15 +321,26 @@ html[data-theme='christmas-premium'] {
     z-index: 1;
     flex: 1;
     min-width: 0;
+    // English text, but kept against the right edge like the rest of the RTL page
+    text-align: right;
+
+    .xp-eyebrow {
+      justify-content: flex-end;
+    }
+
+    .xp-sub {
+      margin-left: auto;
+    }
   }
 
   .xp-eyebrow {
     display: flex;
     align-items: center;
     gap: 8px;
-    font-size: 0.75rem;
+    font-size: 0.72rem;
     font-weight: 600;
-    letter-spacing: 0.12em;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
     color: rgba($champagne-1, 0.9);
 
     &::before {
@@ -342,7 +353,7 @@ html[data-theme='christmas-premium'] {
 
   .xp-title {
     margin: 6px 0 6px;
-    font-family: 'Suez One', 'Miriam Libre', serif;
+    font-family: 'Berkshire Swash', Georgia, serif;
     font-weight: 400;
     font-size: clamp(1.75rem, 6vw, 2.6rem);
     line-height: 1.1;
@@ -359,11 +370,6 @@ html[data-theme='christmas-premium'] {
       margin: 2px 0 4px;
       font-size: 1.6rem;
     }
-  }
-
-  .xp-lang-ar .xp-title {
-    font-family: 'Reem Kufi', 'Heebo', sans-serif;
-    font-weight: 700;
   }
 
   .xp-sub {

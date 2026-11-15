@@ -3,9 +3,9 @@ import './premium.scss';
 import Snowfall from '../shared/Snowfall';
 
 const FONTS_HREF =
-  'https://fonts.googleapis.com/css2?family=Suez+One&family=Reem+Kufi:wght@600;700&display=swap';
+  'https://fonts.googleapis.com/css2?family=Berkshire+Swash&display=swap';
 
-// Display fonts for the hero headline (Hebrew: Suez One, Arabic: Reem Kufi),
+// Display font for the English hero headline (Berkshire Swash, a vintage holiday-card swash),
 // loaded only while this theme is on.
 function useHolidayFonts() {
   useEffect(() => {
