@@ -16,7 +16,7 @@ export default function Header() {
       <div className={s.inner}>
 
         <nav className={s.nav}>
-          <Link to={lang === 'he' ? '/contact' : '/ar/contact'} className={s.contactBtn}>
+          <Link to={lang === 'he' ? '/contact' : '/ar/contact'} className={s.contactBtn} data-theme-slot="header-btn">
             <Phone size={16} />
           </Link>
         </nav>
@@ -26,8 +26,8 @@ export default function Header() {
         </Link>
 
         <div className={s.langSwitch}>
-          <Link to={heLink} className={`${s.langBtn} ${lang === 'he' ? s.langActive : ''}`}>עב</Link>
-          <Link to={arLink} className={`${s.langBtn} ${lang === 'ar' ? s.langActive : ''}`}>عر</Link>
+          <Link to={heLink} className={`${s.langBtn} ${lang === 'he' ? s.langActive : ''}`} data-theme-slot="header-btn" aria-current={lang === 'he' ? 'page' : undefined}>עב</Link>
+          <Link to={arLink} className={`${s.langBtn} ${lang === 'ar' ? s.langActive : ''}`} data-theme-slot="header-btn" aria-current={lang === 'ar' ? 'page' : undefined}>عر</Link>
         </div>
 
       </div>

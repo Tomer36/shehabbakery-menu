@@ -1,17 +1,18 @@
 import './premium.scss';
 
 const copy = {
+  // `subMore` is hidden on phones, so `sub` must read well on its own.
   he: {
-    eyebrow: 'עונת החגים',
-    title: 'מתוקים של חג',
-    sub: 'חג מולד שמח ושנה טובה!',
-    subMore: 'פינוקי החורף מחכים לכם',
+    eyebrow: 'חדש לחגים',
+    title: 'חורף מתוק בכוס',
+    sub: 'משקאות החג החדשים כבר כאן',
+    subMore: '— חג מולד שמח!',
   },
   ar: {
-    eyebrow: 'موسم الأعياد',
-    title: 'حلويات العيد',
-    sub: 'ميلاد مجيد وكل عام وأنتم بخير!',
-    subMore: 'حلويات الشتاء بانتظاركم',
+    eyebrow: 'جديد للأعياد',
+    title: 'شتاء دافئ في كوب',
+    sub: 'مشروبات الأعياد الجديدة وصلت',
+    subMore: '— ميلاد مجيد!',
   },
 };
 
