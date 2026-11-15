@@ -7,6 +7,7 @@ export const THEMES = ['none', 'christmas-premium'];
 const ALIASES = { christmas: 'christmas-premium', xmas: 'christmas-premium' };
 
 const PREVIEW_KEY = 'themePreview';
+const CACHE_KEY = 'siteTheme'; // last theme the sheet gave us — applied instantly on the next visit
 
 /**
  * Where the site settings come from.
@@ -45,6 +46,24 @@ export function themeFromSettings(settings) {
   if (settings.theme_start && now < settings.theme_start) return 'none';
   if (settings.theme_end && now > settings.theme_end) return 'none';
   return theme;
+}
+
+/** Last theme resolved from the sheet (null if none cached / storage blocked). */
+export function readCachedTheme() {
+  try {
+    const t = localStorage.getItem(CACHE_KEY);
+    return t ? normalize(t) : null;
+  } catch {
+    return null;
+  }
+}
+
+export function writeCachedTheme(theme) {
+  try {
+    localStorage.setItem(CACHE_KEY, theme);
+  } catch {
+    // storage blocked — the theme just won't be instant next time
+  }
 }
 
 /**

@@ -6,6 +6,21 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="theme-color" content="#693C12" />
     <title>Shehab Bakery | תפריט</title>
+    <script>
+      // Apply the seasonal theme before first paint: URL preview, tab preview, or the last theme
+      // the menu sheet gave this browser. ThemeProvider takes over once the app loads.
+      (function () {
+        try {
+          var t = new URLSearchParams(location.search).get('theme') ||
+            sessionStorage.getItem('themePreview') || localStorage.getItem('siteTheme');
+          if (t === 'christmas' || t === 'xmas') t = 'christmas-premium';
+          if (t === 'christmas-premium') {
+            document.documentElement.dataset.theme = t;
+            document.querySelector('meta[name="theme-color"]').content = '#1F4430';
+          }
+        } catch (e) {}
+      })();
+    </script>
   </head>
   <body>
     <div id="root"></div>

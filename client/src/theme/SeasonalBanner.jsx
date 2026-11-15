@@ -1,19 +1,14 @@
-import { lazy, Suspense } from 'react';
 import { useTheme } from './themeContext';
+// Loaded with the app (small) so the hero appears together with the menu instead of popping in later.
+import ChristmasHero from './christmas-premium/Hero';
 
-// Hero section per theme (code-split, only loaded while that theme is on).
+// Hero section per theme.
 const heroes = {
-  'christmas-premium': lazy(() => import('./christmas-premium/Hero')),
+  'christmas-premium': ChristmasHero,
 };
 
 export default function SeasonalBanner() {
   const theme = useTheme();
   const Hero = heroes[theme];
-  if (!Hero) return null;
-
-  return (
-    <Suspense fallback={null}>
-      <Hero />
-    </Suspense>
-  );
+  return Hero ? <Hero /> : null;
 }
