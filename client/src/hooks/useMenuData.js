@@ -1,10 +1,10 @@
 import { useState, useEffect } from 'react';
 
-const SHEET_ID = '1pFEt3jHARmi4irwpVt-htl1giAysfpBt988HVFnDyg8';
-const sheetUrl = (sheet) =>
+export const SHEET_ID = '1pFEt3jHARmi4irwpVt-htl1giAysfpBt988HVFnDyg8';
+export const sheetUrl = (sheet) =>
   `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:csv&sheet=${sheet}`;
 
-function parseCSV(text) {
+export function parseCSV(text) {
   const rows = [];
   let current = [];
   let field = '';
@@ -75,8 +75,11 @@ export function useMenuData() {
         const its = parseCSV(itemText)
           .map(i => ({ ...i, status: normalizeStatus(i.status) }))
           .filter(i => i.status !== 'hidden')
-          .map(i => ({
-            id: i.id,
+          // Skip half-filled rows (e.g. only a category typed in) — they render as empty ₪0 cards.
+          .filter(i => i.name && i.name.replace(/[\u200e\u200f]/g, '').trim())
+          .map((i, idx) => ({
+            // Rows without an id would share a React key and render duplicated/stale cards.
+            id: i.id || `row-${idx}`,
             categoryId: i.categoryId,
             status: i.status,
             name: i.name,
@@ -87,6 +90,7 @@ export function useMenuData() {
             descAr: i.descAr || '',
             note: i.note || '',
             noteAr: i.noteAr || '',
+            tag: (i.tag || '').toLowerCase(),
             sizes: parsePiped(i.sizes, i.sizesAr),
             extras: parsePiped(i.extras, i.extrasAr),
           }));

@@ -89,8 +89,8 @@
 
 .price {
   flex-shrink: 0;
-  background: $gold;
-  color: $white;
+  background: $price-bg;
+  color: $price-text;
   font-size: 1rem;
   font-weight: 700;
   padding: 4px 14px;

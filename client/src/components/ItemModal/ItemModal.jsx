@@ -1,10 +1,10 @@
-import { useState, useEffect } from 'react';
+import { useEffect } from 'react';
 import s from './ItemModal.module.scss';
 import { fmt } from '../../utils';
 import { useLang, pick } from '../../LangContext';
+import ItemImage from '../ItemImage/ItemImage';
 
 export default function ItemModal({ item, onClose }) {
-  const [imgError, setImgError] = useState(false);
   const lang = useLang();
 
   useEffect(() => {
@@ -20,19 +20,15 @@ export default function ItemModal({ item, onClose }) {
 
   return (
     <div className={s.overlay} onClick={onClose}>
-      <div className={s.modal} onClick={(e) => e.stopPropagation()}>
+      <div className={s.modal} data-theme-slot="modal" onClick={(e) => e.stopPropagation()}>
 
-        <div className={s.imageWrapper}>
-          {!imgError ? (
-            <img
-              className={s.image}
-              src={item.img}
-              alt={pick(item, 'name', lang)}
-              onError={() => setImgError(true)}
-            />
-          ) : (
-            <div className={s.imageFallback}>🥐</div>
-          )}
+        <div className={s.imageWrapper} data-theme-slot="modal-media">
+          <ItemImage
+            src={item.img}
+            alt={pick(item, 'name', lang)}
+            className={s.image}
+            fallbackClassName={s.imageFallback}
+          />
           <button className={s.close} onClick={onClose}>✕</button>
         </div>
 

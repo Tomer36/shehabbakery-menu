@@ -12,7 +12,7 @@ export default function Header() {
   const arLink = isContact ? '/ar/contact' : '/ar';
 
   return (
-    <header className={s.header}>
+    <header className={s.header} data-theme-slot="header">
       <div className={s.inner}>
 
         <nav className={s.nav}>
@@ -21,7 +21,7 @@ export default function Header() {
           </Link>
         </nav>
 
-        <Link className={s.brand} to={lang === 'he' ? '/' : '/ar'}>
+        <Link className={s.brand} data-theme-slot="logo" to={lang === 'he' ? '/' : '/ar'}>
           <img src="/bakery.png" alt="Shehab Bakery" />
         </Link>
 

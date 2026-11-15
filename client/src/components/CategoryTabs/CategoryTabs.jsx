@@ -1,5 +1,6 @@
 import s from './CategoryTabs.module.scss';
 import { useLang, pick } from '../../LangContext';
+import { isSeasonalCategory } from '../../theme/seasonal';
 
 export default function CategoryTabs({ active, onChange, categories, items }) {
   const lang = useLang();
@@ -10,13 +11,15 @@ export default function CategoryTabs({ active, onChange, categories, items }) {
   };
 
   return (
-    <div className={s.wrapper}>
+    <div className={s.wrapper} data-theme-slot="tabs">
       <div className={s.list}>
         {categories.map((cat) => (
           <button
             key={cat.id}
             className={`${s.tab} ${active === cat.id ? s.active : ''}`}
             onClick={(e) => handleClick(e, cat.id)}
+            aria-pressed={active === cat.id}
+            data-seasonal={isSeasonalCategory(cat) || undefined}
           >
             {pick(cat, 'label', lang)}
             <span className={s.count}>

@@ -103,8 +103,8 @@
   position: absolute;
   top: 10px;
   left: 10px;
-  background: $gold;
-  color: $white;
+  background: $price-bg;
+  color: $price-text;
   font-size: 0.75rem;
   font-weight: 700;
   padding: 4px 10px;
@@ -128,8 +128,8 @@
 }
 
 .splitSegment {
-  background: $gold;
-  color: $white;
+  background: $price-bg;
+  color: $price-text;
   padding: 4px 8px;
   display: flex;
   align-items: center;
@@ -162,7 +162,7 @@
 
 .desc {
   font-size: 0.74rem;
-  color: rgba($brown-deep, 0.6);
+  color: rgba($brown-deep, 0.72);
   line-height: 1.5;
   display: -webkit-box;
   -webkit-line-clamp: 2;

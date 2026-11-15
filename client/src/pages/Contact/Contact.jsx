@@ -45,11 +45,11 @@ export default function Contact() {
   const t = content[lang];
 
   return (
-    <div className={s.page}>
+    <div className={s.page} data-theme-slot="page">
       <Header />
 
       <main className={s.main}>
-        <h2 className={s.heading}>{t.title}</h2>
+        <h2 className={s.heading} data-theme-slot="heading">{t.title}</h2>
 
         <div className={s.card}>
           <div className={s.icon}><MapPin size={22} strokeWidth={1.8} /></div>
@@ -92,7 +92,7 @@ export default function Contact() {
         </div>
       </main>
 
-      <footer className={s.footer}>
+      <footer className={s.footer} data-theme-slot="footer">
         © 2026 Powered by{' '}
         <a href="https://web-reflect.com/" target="_blank" rel="noreferrer">Web Reflect</a>
       </footer>

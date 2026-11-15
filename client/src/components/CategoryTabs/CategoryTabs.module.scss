@@ -46,10 +46,10 @@
   }
 
   &.active {
-    background: $gold;
-    border-color: $gold;
-    color: $white;
-    box-shadow: 0 4px 12px rgba($gold, 0.4);
+    background: $accent;
+    border-color: $accent-border;
+    color: $accent-text;
+    box-shadow: 0 4px 12px $accent-shadow;
   }
 }
 

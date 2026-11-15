@@ -5,9 +5,11 @@ import { LangContext } from './LangContext'
 import './styles/global.scss'
 import App from './App.jsx'
 import Contact from './pages/Contact/Contact.jsx'
+import ThemeProvider from './theme/ThemeProvider.jsx'
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
+    <ThemeProvider>
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<LangContext.Provider value="he"><App /></LangContext.Provider>} />
@@ -16,5 +18,6 @@ createRoot(document.getElementById('root')).render(
         <Route path="/ar/contact" element={<LangContext.Provider value="ar"><Contact /></LangContext.Provider>} />
       </Routes>
     </BrowserRouter>
+    </ThemeProvider>
   </StrictMode>,
 )
