@@ -36,9 +36,17 @@ jobs:
           FTP_USERNAME: ${{ secrets.FTP_USERNAME }}
           FTP_PASSWORD: ${{ secrets.FTP_PASSWORD }}
         run: |
-          listing=$(curl -s --ssl-reqd -k --list-only --user "$FTP_USERNAME:$FTP_PASSWORD" "ftp://$FTP_SERVER/")
-          echo "FTP login folder contains:"; echo "$listing"
-          if echo "$listing" | grep -qx 'public_html'; then dir=./public_html/; else dir=./; fi
+          # FTP listings end lines with \r — strip it before comparing names.
+          ls_ftp() { curl -s --ssl-reqd -k --list-only --user "$FTP_USERNAME:$FTP_PASSWORD" "ftp://$FTP_SERVER/$1" | tr -d '\r'; }
+          echo "FTP login folder contains:"; ls_ftp "" | sed 's/^/  /'
+          dir=""
+          for candidate in "public_html/" "domains/shehabbakery-menu.online/public_html/"; do
+            if ls_ftp "$candidate" | grep -qx 'index.html'; then dir="./$candidate"; break; fi
+          done
+          if [ -z "$dir" ]; then
+            echo "::error::Couldn't find the website's public_html (with index.html) on this FTP login — not deploying."
+            exit 1
+          fi
           echo "Uploading to: $dir"
           echo "dir=$dir" >> "$GITHUB_OUTPUT"
 
