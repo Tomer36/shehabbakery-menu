@@ -7,7 +7,8 @@
     "dev": "vite",
     "build": "vite build",
     "lint": "eslint .",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "images": "node scripts/optimize-images.mjs"
   },
   "dependencies": {
     "lucide-react": "^1.16.0",
@@ -25,6 +26,7 @@
     "eslint-plugin-react-refresh": "^0.5.2",
     "globals": "^17.6.0",
     "sass": "^1.99.0",
+    "sharp": "^0.34.5",
     "vite": "^8.0.12"
   }
 }
