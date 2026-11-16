@@ -1,0 +1,54 @@
+// Blurred, zoomed copy of a narrow photo used as the background behind it.
+.backdrop {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: blur(16px) saturate(1.05);
+  transform: scale(1.25);
+  opacity: 0.85;
+  pointer-events: none;
+}
+
+// Soft placeholder while the photo downloads.
+.shimmer {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, #f1e7da 0%, #faf4ec 45%, #f1e7da 90%);
+  background-size: 200% 100%;
+  animation: shimmer 1.4s ease-in-out infinite;
+
+  @media (prefers-reduced-motion: reduce) {
+    animation: none;
+  }
+}
+
+@keyframes shimmer {
+  from { background-position: 100% 0; }
+  to   { background-position: -100% 0; }
+}
+
+// Hidden until fully decoded, then faded in (no top-to-bottom half-drawn photos).
+.pending.pending {
+  opacity: 0;
+}
+
+.ready {
+  animation: fadeIn 0.2s ease-out;
+
+  @media (prefers-reduced-motion: reduce) {
+    animation: none;
+  }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+// Show the whole photo; doubled class beats the parent's `.image { object-fit: cover }`.
+.contain.contain {
+  position: relative;
+  object-fit: contain;
+}

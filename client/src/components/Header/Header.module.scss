@@ -1,0 +1,98 @@
+@use '../../styles/variables' as *;
+
+.header {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  background-color: $brown;
+  border-bottom: 2px solid rgba($gold, 0.5);
+  box-shadow: 0 2px 16px rgba(0, 0, 0, 0.3);
+}
+
+.inner {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 0 20px;
+  height: 86px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  direction: rtl;
+}
+
+.nav {
+  flex: 1;
+  display: flex;
+  justify-content: flex-start;
+}
+
+.contactBtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  border: 1.5px solid rgba($cream, 0.5);
+  color: rgba($cream, 0.95);
+  text-decoration: none;
+  transition: all 0.2s;
+
+  &:hover {
+    color: $cream;
+    border-color: $cream;
+    background: rgba($cream, 0.1);
+  }
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+
+  img {
+    height: 64px;
+    width: 64px;
+    object-fit: contain;
+    border-radius: 50%;
+    border: 1.5px solid $gold;
+    padding: 1px;
+    background: rgba($gold, 0.1);
+    box-shadow: 0 0 0 2px rgba($gold, 0.15);
+    transition: box-shadow 0.2s;
+
+    &:hover {
+      box-shadow: 0 0 0 6px rgba($gold, 0.25);
+    }
+  }
+}
+
+.langSwitch {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 4px;
+}
+
+.langBtn {
+  padding: 6px 13px;
+  border-radius: $radius-pill;
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: rgba($cream, 0.95);
+  border: 1.5px solid rgba($cream, 0.5);
+  text-decoration: none;
+  transition: all 0.2s;
+
+  &:hover {
+    color: $cream;
+    border-color: rgba($cream, 0.5);
+  }
+
+  &.langActive {
+    color: $brown;
+    background: $gold;
+    border-color: $gold;
+  }
+}

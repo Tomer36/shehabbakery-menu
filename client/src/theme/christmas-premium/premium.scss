@@ -1,0 +1,702 @@
+// "Winter night at the bakery" — premium Christmas theme.
+// Only loaded while the theme is on; every rule is scoped to html[data-theme="christmas-premium"].
+// Principle: change the atmosphere (colour, light, type), keep decorations few and well made.
+
+@use 'garland' as *;
+
+$pine:        #1F3D2B;
+$pine-deep:   #173022;
+$pine-light:  #2A5239;
+$cranberry:   #9B1B30;
+$berry:       #C1272D;
+$champagne:   #D4A24C;
+$champagne-1: #F6E3B4;
+$champagne-2: #E9C77A;
+$ivory:       #FBF5EA;
+$cup-red:     #8E1B26; // the holiday cup's red band
+$cup-red-2:   #A3222F;
+$wine:        #4E0C14;
+$ink:         #3d2208;
+
+$foil: linear-gradient(135deg, $champagne-1 0%, $champagne 50%, $champagne-2 100%);
+
+html[data-theme='christmas-premium'] {
+  // ── Accent hooks (see _variables.scss) ──────────────────
+  // active tab in pine green (balances the red page)
+  --theme-accent: #{$pine};
+  --theme-accent-hover: #{$pine-light};
+  --theme-accent-border: #{$champagne};
+  --theme-accent-shadow: rgba(23, 48, 34, 0.35);
+  --theme-accent-text: #{$champagne-1};
+  // pine-green price badges with cream text (green stands out against the red cups and ribbons)
+  --theme-price-bg: linear-gradient(135deg, #{$pine-light} 0%, #{$pine} 60%, #{$pine-deep} 100%);
+  --theme-price-text: #{$champagne-1};
+
+  body {
+    background-color: $cup-red;
+  }
+
+  // ── Page: the holiday cup's red, with faint gold sparkles and a soft glow down the middle ─
+  [data-theme-slot='page'] {
+    background-color: $cup-red;
+    background-image:
+      radial-gradient(ellipse 70% 55% at 50% 30%, rgba(201, 52, 64, 0.55), transparent 75%),
+      radial-gradient(ellipse 80% 60% at 50% 110%, rgba(40, 4, 9, 0.45), transparent 70%),
+      $gold-pattern;
+    background-size: 100% 100%, 100% 100%, 200px 200px;
+    background-attachment: fixed, fixed, scroll;
+  }
+
+  // text that sits directly on the page needs to be light on red
+  [data-theme-slot='loading'],
+  [data-theme-slot='heading'] {
+    color: $ivory;
+  }
+
+  // ── Snow canvas ─────────────────────────────────────────
+  .theme-snow {
+    position: fixed;
+    inset: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 55; // above the sticky header (50), below the item modal (100)
+    pointer-events: none;
+  }
+
+  // ── Header: deep pine green with one string of twinkling lights (green frame around the red page) ─
+  [data-theme-slot='header'] {
+    background: linear-gradient(180deg, #1F4430 0%, #132B1D 100%);
+    border-bottom: 2px solid rgba($champagne, 0.6); // keep 2px: the header must stay 88px tall like the base design
+
+    // wire + warm-white / red bulbs draped along the top
+    &::before,
+    &::after {
+      content: '';
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: 0;
+      height: 26px;
+      pointer-events: none;
+      background-repeat: repeat-x;
+      background-size: 160px 26px;
+      filter: drop-shadow(0 0 4px rgba(255, 210, 130, 0.85));
+    }
+
+    &::before {
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 160 26'%3E%3Cpath d='M0 4 Q80 30 160 4' fill='none' stroke='%23140b04' stroke-opacity='.85' stroke-width='1.2'/%3E%3Cg fill='%23140b04'%3E%3Crect x='22.5' y='9.6' width='3' height='2.4'/%3E%3Crect x='78.5' y='16' width='3' height='2.4'/%3E%3Crect x='134.5' y='9.6' width='3' height='2.4'/%3E%3Crect x='51.3' y='14.5' width='3' height='2.4'/%3E%3Crect x='105.7' y='14.5' width='3' height='2.4'/%3E%3C/g%3E%3Cellipse cx='24' cy='15.4' rx='2.6' ry='3.6' fill='%23FFF3C4'/%3E%3Cellipse cx='80' cy='21.8' rx='2.6' ry='3.6' fill='%23E0414B'/%3E%3Cellipse cx='136' cy='15.4' rx='2.6' ry='3.6' fill='%23FFF3C4'/%3E%3C/svg%3E");
+      animation: xp-twinkle-a 2.8s ease-in-out infinite alternate;
+    }
+
+    // gold bulbs, twinkling out of phase
+    &::after {
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 160 26'%3E%3Cellipse cx='52.8' cy='20.3' rx='2.6' ry='3.6' fill='%23F5C26B'/%3E%3Cellipse cx='107.2' cy='20.3' rx='2.6' ry='3.6' fill='%23F5C26B'/%3E%3C/svg%3E");
+      animation: xp-twinkle-b 2.8s ease-in-out infinite alternate;
+    }
+  }
+
+  // ── Logo: neat Santa hat ────────────────────────────────
+  [data-theme-slot='logo'] {
+    position: relative;
+    z-index: 2;
+
+    img {
+      border-color: $champagne;
+      box-shadow: 0 0 0 2px rgba($champagne, 0.14), 0 0 12px rgba(255, 210, 130, 0.18);
+    }
+
+    &::before {
+      content: '';
+      position: absolute;
+      top: -13px;
+      right: -12px;
+      width: 46px;
+      height: 40px;
+      transform: rotate(16deg);
+      pointer-events: none;
+      z-index: 1;
+      background: no-repeat center / contain
+        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 56'%3E%3Cpath d='M6 44 C10 22 26 6 44 8 C52 9 58 16 56 26 L50 24 C48 18 44 16 40 18 C34 22 34 34 38 44 Z' fill='%23B3202A'/%3E%3Cpath d='M44 8 C52 9 58 16 56 26 L50 24 C48 18 44 16 40 18 C42 14 43 11 44 8 Z' fill='%238C1620'/%3E%3Crect x='2' y='40' width='42' height='12' rx='6' fill='%23FBF5EA'/%3E%3Ccircle cx='54' cy='28' r='7' fill='%23FBF5EA'/%3E%3C/svg%3E");
+      filter: drop-shadow(0 2px 2px rgba(0, 0, 0, 0.35));
+    }
+  }
+
+  // ── Category bar: gold hairline with a small star ───────
+  [data-theme-slot='tabs'] {
+    border-bottom-color: transparent;
+
+    &::after {
+      content: '';
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba($champagne, 0.85) 20%, rgba($champagne, 0.85) 80%, transparent);
+    }
+
+    &::before {
+      content: '✦';
+      position: absolute;
+      left: 50%;
+      bottom: -8px;
+      transform: translateX(-50%);
+      z-index: 1;
+      padding: 0 8px;
+      font-size: 13px;
+      line-height: 16px;
+      color: $champagne;
+      background: $ivory;
+      border-radius: 999px;
+    }
+  }
+
+  // ── Menu cards: hairline gold, warm glow on hover (gift ribbon + bow further down) ─
+  [data-theme-slot='card'] {
+    position: relative;
+    border-color: rgba($champagne, 0.45);
+    box-shadow: 0 6px 20px rgba(40, 4, 9, 0.28);
+
+    &:hover {
+      border-color: $champagne;
+      box-shadow: 0 12px 32px rgba(40, 4, 9, 0.4), 0 0 0 1px rgba($champagne, 0.5);
+    }
+  }
+
+  // ── Price badges: champagne foil with a slow sheen ──────
+  [data-theme-slot='price'] {
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(23, 48, 34, 0.35), inset 0 0 0 1px rgba($champagne, 0.6);
+
+    &::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      width: 40%;
+      left: -60%;
+      background: linear-gradient(100deg, transparent, rgba(255, 255, 255, 0.75), transparent);
+      animation: xp-sheen 5s ease-in-out infinite;
+    }
+  }
+
+  // ── "Holiday pick" ribbon (items with tag = holiday) ────
+  .seasonal-tag {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    z-index: 2;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 4px 10px;
+    border-radius: 999px;
+    // gold foil, so it doesn't read as a second green pill next to the green price
+    background: $foil;
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    color: $ink;
+    font-size: 0.68rem;
+    font-weight: 700;
+    box-shadow: 0 2px 8px rgba(61, 34, 8, 0.3);
+  }
+
+  // ── Item popup: sparkle on open (gift ribbon + bow further down) ─
+  [data-theme-slot='modal'] {
+    position: relative;
+
+    &::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      z-index: 3;
+      pointer-events: none;
+      background:
+        radial-gradient(circle 3px at 20% 18%, #fff 98%, transparent),
+        radial-gradient(circle 2px at 32% 8%, $champagne-1 98%, transparent),
+        radial-gradient(circle 3px at 78% 14%, $champagne 98%, transparent),
+        radial-gradient(circle 2px at 88% 30%, #fff 98%, transparent),
+        radial-gradient(circle 2.5px at 12% 38%, $champagne 98%, transparent),
+        radial-gradient(circle 2px at 64% 6%, #fff 98%, transparent),
+        radial-gradient(circle 2.5px at 50% 24%, $champagne-1 98%, transparent),
+        radial-gradient(circle 2px at 92% 8%, $champagne-1 98%, transparent);
+      animation: xp-burst 1.1s ease-out forwards;
+    }
+  }
+
+  // ── Footer: little village skyline ──────────────────────
+  [data-theme-slot='footer'] {
+    position: relative;
+    padding-top: 78px;
+    color: rgba($ivory, 0.7);
+
+    a {
+      color: $champagne-2;
+    }
+
+    &::before {
+      content: '';
+      position: absolute;
+      top: 12px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 360px;
+      max-width: 100%;
+      height: 56px;
+      background: no-repeat center bottom / contain
+        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 360 56'%3E%3Cg fill='%23F1D58E' fill-opacity='.3'%3E%3Cpath d='M20 56V38L38 24L56 38V56Z M64 56V42L78 32L92 42V56Z M98 56L106 38L114 56Z M118 56V40L132 30L146 40V56Z M152 56V32L170 18L188 32V56Z M165 22V6L170 0L175 6V22Z M194 56V38L210 26L226 38V56Z M230 56L239 34L248 56Z M252 56V42L268 30L284 42V56Z M290 56V36L310 22L330 36V56Z M334 56L343 36L352 56Z'/%3E%3Crect x='0' y='54' width='360' height='2'/%3E%3C/g%3E%3Cg fill='%23E9B85C'%3E%3Crect x='35' y='44' width='5' height='5' rx='1'/%3E%3Crect x='76' y='46' width='4' height='4' rx='1'/%3E%3Crect x='130' y='46' width='4' height='4' rx='1'/%3E%3Cpath d='M167 48V40a3 3 0 0 1 6 0V48Z'/%3E%3Crect x='208' y='44' width='5' height='5' rx='1'/%3E%3Crect x='266' y='46' width='4' height='4' rx='1'/%3E%3Crect x='307' y='42' width='5' height='5' rx='1'/%3E%3C/g%3E%3C/svg%3E");
+    }
+  }
+
+  // ── Hero ────────────────────────────────────────────────
+  .xp-hero {
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    margin: 6px 0 24px;
+    padding: 40px 28px 22px;
+    border-radius: 22px;
+    color: $ivory;
+    background: linear-gradient(120deg, $pine-deep 0%, $pine 55%, #24492F 100%);
+    border: 1px solid rgba($champagne, 0.45);
+    box-shadow: 0 14px 34px rgba(23, 48, 34, 0.28), inset 0 1px 0 rgba(255, 255, 255, 0.08);
+
+    // drifting bokeh lights
+    &::before {
+      content: '';
+      position: absolute;
+      inset: -30%;
+      pointer-events: none;
+      background:
+        radial-gradient(circle 26px at 18% 30%, rgba(255, 214, 140, 0.22), transparent),
+        radial-gradient(circle 40px at 35% 75%, rgba(255, 214, 140, 0.12), transparent),
+        radial-gradient(circle 18px at 55% 22%, rgba(255, 240, 200, 0.25), transparent),
+        radial-gradient(circle 34px at 72% 60%, rgba(193, 39, 45, 0.22), transparent),
+        radial-gradient(circle 22px at 85% 28%, rgba(255, 214, 140, 0.2), transparent),
+        radial-gradient(circle 48px at 92% 85%, rgba(255, 214, 140, 0.1), transparent),
+        radial-gradient(circle 14px at 44% 50%, rgba(255, 240, 200, 0.22), transparent);
+      filter: blur(2px);
+      animation: xp-drift 16s ease-in-out infinite alternate;
+    }
+
+    // compact on phones so the first drinks show without scrolling
+    @media (max-width: 480px) {
+      margin-bottom: 16px;
+      padding: 28px 14px 12px;
+      gap: 6px;
+      border-radius: 18px;
+    }
+  }
+
+  .xp-garland {
+    position: absolute;
+    top: -6px;
+    left: 0;
+    right: 0;
+    height: 36px;
+    z-index: 1;
+    pointer-events: none;
+    background: $garland repeat-x 0 0 / 126px 36px;
+    filter: drop-shadow(0 3px 3px rgba(0, 0, 0, 0.35));
+  }
+
+  .xp-bow {
+    position: absolute;
+    top: 2px;
+    left: 18px;
+    width: 64px;
+    z-index: 2;
+    filter: drop-shadow(0 3px 4px rgba(0, 0, 0, 0.4));
+
+    @media (max-width: 480px) {
+      width: 46px;
+      left: 10px;
+    }
+  }
+
+  .xp-hero-text {
+    position: relative;
+    z-index: 1;
+    flex: 1;
+    min-width: 0;
+    // English text, but kept against the right edge like the rest of the RTL page
+    text-align: right;
+
+    .xp-eyebrow {
+      justify-content: flex-end;
+    }
+
+    .xp-sub {
+      margin-left: auto;
+    }
+  }
+
+  .xp-eyebrow {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: rgba($champagne-1, 0.9);
+
+    &::before {
+      content: '';
+      width: 22px;
+      height: 1px;
+      background: $champagne;
+    }
+  }
+
+  .xp-title {
+    margin: 6px 0 6px;
+    font-family: 'Berkshire Swash', Georgia, serif;
+    font-weight: 400;
+    font-size: clamp(1.75rem, 6vw, 2.6rem);
+    line-height: 1.1;
+    background: linear-gradient(100deg, $champagne-2 0%, $champagne-1 30%, $champagne 55%, $champagne-1 80%, $champagne-2 100%);
+    background-size: 220% 100%;
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.3));
+    animation: xp-foil 7s ease-in-out infinite alternate;
+    text-wrap: balance;
+
+    @media (max-width: 480px) {
+      margin: 2px 0 4px;
+      font-size: 1.6rem;
+    }
+  }
+
+  .xp-sub {
+    max-width: 40ch;
+    font-size: 0.92rem;
+    line-height: 1.5;
+    color: rgba($ivory, 0.85);
+    text-wrap: balance; // no lone word on the last line
+
+    @media (max-width: 480px) {
+      font-size: 0.8rem;
+    }
+  }
+
+  // second sentence of the subtitle is dropped on phones to keep the hero short
+  .xp-sub-more {
+    @media (max-width: 480px) {
+      display: none;
+    }
+  }
+
+  .xp-eyebrow {
+    @media (max-width: 480px) {
+      font-size: 0.68rem;
+    }
+  }
+
+  .xp-hero-art {
+    position: relative;
+    z-index: 1;
+    flex-shrink: 0;
+    width: 230px;
+    height: auto;
+    margin-bottom: -8px;
+
+    @media (max-width: 480px) {
+      width: 112px;
+    }
+  }
+
+  .xp-steam {
+    stroke-dasharray: 6 5;
+    animation: xp-steam 2.4s linear infinite;
+    opacity: 0.8;
+  }
+
+  .xp-steam-2 {
+    animation-delay: -1.2s;
+  }
+
+  .xp-light {
+    animation: xp-bulb 1.8s ease-in-out infinite alternate;
+
+    &.xp-l1 { animation-delay: -0.45s; }
+    &.xp-l2 { animation-delay: -0.9s; }
+    &.xp-l3 { animation-delay: -1.35s; }
+  }
+
+  .xp-twinkle {
+    transform-box: fill-box;
+    transform-origin: center;
+    animation: xp-star 2.6s ease-in-out infinite alternate;
+
+    &.xp-d1 { animation-delay: -0.6s; }
+    &.xp-d2 { animation-delay: -1.3s; }
+    &.xp-d3 { animation-delay: -2s; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    [data-theme-slot='header']::before,
+    [data-theme-slot='header']::after,
+    [data-theme-slot='price']::after,
+    [data-theme-slot='modal']::after,
+    .xp-hero::before,
+    .xp-title,
+    .xp-steam,
+    .xp-light,
+    .xp-twinkle {
+      animation: none;
+    }
+
+    [data-theme-slot='modal']::after {
+      opacity: 0;
+    }
+  }
+}
+
+@keyframes xp-twinkle-a {
+  from { opacity: 1; }
+  to   { opacity: 0.55; }
+}
+
+@keyframes xp-twinkle-b {
+  from { opacity: 0.5; }
+  to   { opacity: 1; }
+}
+
+@keyframes xp-sheen {
+  0%, 70% { left: -60%; }
+  100%    { left: 130%; }
+}
+
+@keyframes xp-burst {
+  0%   { opacity: 0; transform: scale(0.85); }
+  25%  { opacity: 1; }
+  100% { opacity: 0; transform: scale(1.12); }
+}
+
+@keyframes xp-drift {
+  from { transform: translate(0, 0); }
+  to   { transform: translate(-6%, 4%); }
+}
+
+@keyframes xp-foil {
+  from { background-position: 0% 50%; }
+  to   { background-position: 100% 50%; }
+}
+
+@keyframes xp-steam {
+  to { stroke-dashoffset: -22; }
+}
+
+@keyframes xp-bulb {
+  from { opacity: 0.45; }
+  to   { opacity: 1; }
+}
+
+@keyframes xp-star {
+  from { opacity: 0.55; transform: scale(0.85); }
+  to   { opacity: 1; transform: scale(1.1); }
+}
+
+// On narrow cards the ribbon would collide with the price badge — tuck it to the bottom of the photo.
+@media (max-width: 600px) {
+  html[data-theme='christmas-premium'] .seasonal-tag {
+    top: auto;
+    bottom: 8px;
+  }
+}
+
+// Seasonal category tab (e.g. "Christmas" drinks) — stands out with foil and a star.
+html[data-theme='christmas-premium'] [data-seasonal] {
+  border-color: $champagne;
+  color: $cranberry;
+
+  &::before {
+    content: '✦';
+    color: $champagne;
+  }
+
+  &[aria-pressed='false'] {
+    background: linear-gradient(135deg, rgba($champagne-1, 0.55), rgba($champagne-2, 0.35));
+  }
+
+  &[aria-pressed='true'] {
+    color: $champagne-1;
+  }
+}
+
+// Items without a photo: a festive pine card with a gold cup instead of the faded croissant.
+html[data-theme='christmas-premium'] [data-theme-slot='img-fallback'] {
+  opacity: 1;
+  font-size: 0;
+  background:
+    no-repeat center / 38% auto
+      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 80 80'%3E%3Cg fill='none' stroke='%23E9C77A' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M16 34H56V50Q56 68 36 68Q16 68 16 50Z'/%3E%3Cpath d='M56 39Q68 39 68 48Q68 57 56 56'/%3E%3Cpath d='M10 74H62'/%3E%3Cpath d='M28 26Q23 19 28 13Q33 7 28 2' opacity='.8'/%3E%3Cpath d='M40 26Q35 19 40 13Q45 7 40 3' opacity='.8'/%3E%3C/g%3E%3Cpath d='M64 8l1.6 4.4 4.4 1.6-4.4 1.6L64 20l-1.6-4.4L58 14l4.4-1.6Z' fill='%23F6E3B4'/%3E%3C/svg%3E"),
+    radial-gradient(circle 30px at 20% 25%, rgba(255, 214, 140, 0.18), transparent),
+    radial-gradient(circle 40px at 80% 75%, rgba(193, 39, 45, 0.2), transparent),
+    linear-gradient(135deg, $pine-deep, $pine 55%, #3a1520);
+}
+
+// Scroll-to-top button as a glass bauble.
+html[data-theme='christmas-premium'] [data-theme-slot='scroll-top'] {
+  overflow: visible;
+  background: radial-gradient(circle at 32% 30%, #fff6dc, $champagne 45%, #8a6420);
+  color: $wine;
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  box-shadow: 0 6px 16px rgba(40, 4, 9, 0.45);
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: -7px;
+    left: 50%;
+    width: 12px;
+    height: 8px;
+    transform: translateX(-50%);
+    border-radius: 2px 2px 0 0;
+    background: linear-gradient(135deg, #f6e3b4, #8a6420);
+  }
+
+  &:hover {
+    background: radial-gradient(circle at 32% 30%, #fffaea, #e2b660 45%, #9a7228);
+  }
+}
+
+
+// ════════════════════════════════════════════════════════════
+// Menu items: wrapped like gifts
+// ════════════════════════════════════════════════════════════
+$card-bow: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 48 31'%3E%3Cpath d='M22 15 L15 29 L19 27 L21 31 L25 16Z M26 15 L33 29 L29 27 L27 31 L23 16Z' fill='%239B1B30'/%3E%3Cpath d='M24 13 C14 0 2 4 6 13 C9 19 19 17 24 13Z M24 13 C34 0 46 4 42 13 C39 19 29 17 24 13Z' fill='%23B3202A'/%3E%3Cpath d='M24 13 C17 6 10 6 9 11 M24 13 C31 6 38 6 39 11' fill='none' stroke='%237E121B' stroke-width='1.2' opacity='.7'/%3E%3Cellipse cx='24' cy='14' rx='4.6' ry='4.2' fill='%23C1272D'/%3E%3Cellipse cx='22.6' cy='12.8' rx='1.6' ry='1.1' fill='%23fff' opacity='.4'/%3E%3C/svg%3E");
+
+$satin: linear-gradient(180deg,
+  $champagne 0 1px,
+  #d43a42 1px,
+  $berry 3px,
+  #8c1620 6px,
+  $champagne 6px 7px);
+
+html[data-theme='christmas-premium'] {
+  // satin ribbon along the bottom of each photo…
+  [data-theme-slot='card-media']::after,
+  [data-theme-slot='modal-media']::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 7px;
+    z-index: 1;
+    pointer-events: none;
+    background: $satin;
+    box-shadow: 0 -1px 3px rgba(0, 0, 0, 0.15);
+  }
+
+  // …tied with a bow where photo meets text (photo area is 180px tall)
+  [data-theme-slot='card']::after {
+    content: '';
+    position: absolute;
+    top: 166px;
+    left: 50%;
+    width: 44px;
+    height: 28px;
+    margin-left: -22px;
+    z-index: 3;
+    pointer-events: none;
+    background: $card-bow no-repeat center / contain;
+    filter: drop-shadow(0 2px 2px rgba(0, 0, 0, 0.3));
+    transform-origin: 50% 40%;
+  }
+
+  [data-theme-slot='card']:hover::after {
+    animation: xp-jingle 0.6s ease-in-out;
+  }
+
+  // bow tied where the photo meets the text, half over each (like the cards)
+  [data-theme-slot='modal-body'] {
+    position: relative;
+
+    &::before {
+      content: '';
+      position: absolute;
+      top: -17px;
+      left: 50%;
+      width: 54px;
+      height: 34px;
+      margin-left: -27px;
+      z-index: 3;
+      pointer-events: none;
+      background: $card-bow no-repeat center / contain;
+      filter: drop-shadow(0 2px 2px rgba(0, 0, 0, 0.3));
+    }
+  }
+
+  // the '…more' dots aren't needed in the festive look
+  [data-theme-slot='dots'] {
+    display: none;
+  }
+
+  // cards drift in one after another when a category opens
+  [data-theme-slot='card'] {
+    animation: xp-card-in 0.55s cubic-bezier(0.2, 0.7, 0.3, 1) backwards; // backwards: never pins transform, so the hover lift still works
+
+    @for $i from 1 through 12 {
+      &:nth-child(#{$i}) { animation-delay: #{($i - 1) * 0.05}s; }
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    [data-theme-slot='card'],
+    [data-theme-slot='card']:hover::after {
+      animation: none;
+    }
+  }
+}
+
+@keyframes xp-jingle {
+  0%, 100% { transform: rotate(0); }
+  25% { transform: rotate(-12deg); }
+  50% { transform: rotate(10deg); }
+  75% { transform: rotate(-6deg); }
+}
+
+@keyframes xp-card-in {
+  from { opacity: 0; transform: translateY(14px) scale(0.98); }
+  to   { opacity: 1; transform: none; }
+}
+
+// Warm cream tab bar instead of stark white between the wine header and the red page.
+html[data-theme='christmas-premium'] [data-theme-slot='tabs'] {
+  background: $ivory;
+}
+
+// With the dots hidden, a card footer that holds nothing else would only add empty space.
+html[data-theme='christmas-premium'] [data-theme-slot='card-footer']:not(:has(> :not([data-theme-slot='dots']))) {
+  display: none;
+}
+
+// Phones: smaller, higher, wider-spaced bulbs so they frame the header without touching the buttons or the hat.
+@media (max-width: 600px) {
+  html[data-theme='christmas-premium'] [data-theme-slot='header'] {
+    &::before,
+    &::after {
+      top: -4px;
+      height: 20px;
+      background-size: 140px 20px;
+    }
+  }
+}
+
+// Header controls as one gold set: thin gold outline, cream text; the current language stays filled gold.
+html[data-theme='christmas-premium'] [data-theme-slot='header-btn']:not([aria-current]) {
+  border-color: rgba($champagne, 0.7);
+  color: $champagne-1;
+
+  &:hover {
+    border-color: $champagne-1;
+    background: rgba($champagne, 0.12);
+  }
+}

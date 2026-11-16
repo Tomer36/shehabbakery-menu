@@ -1,0 +1,78 @@
+@use '../../styles/variables' as *;
+
+.wrapper {
+  position: sticky;
+  top: 86px; // tucked 2px under the 88px header (z-index 50) so subpixel rounding on phones never shows a gap
+  z-index: 40;
+  background: $white;
+  border-bottom: 1px solid rgba($gold, 0.2);
+  box-shadow: 0 2px 8px rgba($brown, 0.08);
+}
+
+.list {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 12px 20px;
+  scroll-padding-inline: 20px;
+  display: flex;
+  gap: 7px;
+  overflow-x: auto;
+  scrollbar-width: none;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+.tab {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 9px 12px;
+  border-radius: $radius-pill;
+  border: 1.5px solid rgba($gold, 0.35);
+  background: transparent;
+  color: rgba($brown, 0.7);
+  font-family: $font-main;
+  font-size: 0.85rem;
+  font-weight: 600;
+  white-space: nowrap;
+  transition: background 0.2s, color 0.2s, border-color 0.2s, box-shadow 0.2s;
+
+  &:hover {
+    border-color: $gold;
+    color: $brown;
+  }
+
+  &.active {
+    background: $accent;
+    border-color: $accent-border;
+    color: $accent-text;
+    box-shadow: 0 4px 12px $accent-shadow;
+  }
+}
+
+.count {
+  font-size: 0.72rem;
+  font-weight: 700;
+  opacity: 0.75;
+}
+
+.placeholder {
+  height: 38px;
+  border-color: transparent;
+  background: linear-gradient(90deg, #f1e7da 0%, #faf4ec 45%, #f1e7da 90%);
+  background-size: 200% 100%;
+  animation: tabShimmer 1.4s ease-in-out infinite;
+  pointer-events: none;
+
+  @media (prefers-reduced-motion: reduce) {
+    animation: none;
+  }
+}
+
+@keyframes tabShimmer {
+  from { background-position: 100% 0; }
+  to   { background-position: -100% 0; }
+}
