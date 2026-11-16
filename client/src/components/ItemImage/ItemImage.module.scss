@@ -35,7 +35,7 @@
 }
 
 .ready {
-  animation: fadeIn 0.35s ease;
+  animation: fadeIn 0.2s ease-out;
 
   @media (prefers-reduced-motion: reduce) {
     animation: none;

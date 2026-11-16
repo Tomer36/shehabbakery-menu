@@ -20,6 +20,16 @@
           }
         } catch (e) {}
       })();
+
+      // Start downloading the menu from the Google Sheet now, while the app itself downloads,
+      // instead of waiting for it (useMenuData picks this up). Keep the sheet id in sync with useMenuData.js.
+      (function () {
+        if (!window.fetch || !window.Promise) return;
+        var base = 'https://docs.google.com/spreadsheets/d/1pFEt3jHARmi4irwpVt-htl1giAysfpBt988HVFnDyg8/gviz/tq?tqx=out:csv&sheet=';
+        var get = function (s) { return fetch(base + s).then(function (r) { return r.text(); }); };
+        window.__menuSheets = Promise.all([get('categories'), get('items')]);
+        window.__menuSheets.catch(function () {}); // the app retries if this fails
+      })();
     </script>
   </head>
   <body>
