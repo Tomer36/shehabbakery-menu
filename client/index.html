@@ -6,29 +6,43 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="theme-color" content="#693C12" />
     <title>Shehab Bakery | תפריט</title>
+    <style>
+      /* First visit only: the theme isn't known yet, so show a blank page instead of
+         flashing the normal design for a moment before the seasonal one. Max ~2.5s. */
+      html[data-theme-pending] body { visibility: hidden; }
+    </style>
     <script>
       // Apply the seasonal theme before first paint: URL preview, tab preview, or the last theme
       // the menu sheet gave this browser. ThemeProvider takes over once the app loads.
       (function () {
+        var root = document.documentElement;
         try {
           var t = new URLSearchParams(location.search).get('theme') ||
             sessionStorage.getItem('themePreview') || localStorage.getItem('siteTheme');
           if (t === 'christmas' || t === 'xmas') t = 'christmas-premium';
           if (t === 'christmas-premium') {
-            document.documentElement.dataset.theme = t;
+            root.dataset.theme = t;
             document.querySelector('meta[name="theme-color"]').content = '#1F4430';
+          }
+          // Nothing known (first visit / private window): wait for the sheet before showing the page.
+          if (!t) {
+            root.dataset.themePending = '';
+            setTimeout(function () { delete root.dataset.themePending; }, 2500); // never stay hidden
           }
         } catch (e) {}
       })();
 
-      // Start downloading the menu from the Google Sheet now, while the app itself downloads,
-      // instead of waiting for it (useMenuData picks this up). Keep the sheet id in sync with useMenuData.js.
+      // Start downloading the menu and site settings from the Google Sheet now, while the app itself
+      // downloads, instead of waiting for it (useMenuData / settings.js pick these up).
+      // Keep the sheet id in sync with useMenuData.js.
       (function () {
         if (!window.fetch || !window.Promise) return;
         var base = 'https://docs.google.com/spreadsheets/d/1pFEt3jHARmi4irwpVt-htl1giAysfpBt988HVFnDyg8/gviz/tq?tqx=out:csv&sheet=';
         var get = function (s) { return fetch(base + s).then(function (r) { return r.text(); }); };
         window.__menuSheets = Promise.all([get('categories'), get('items')]);
         window.__menuSheets.catch(function () {}); // the app retries if this fails
+        window.__settingsSheet = get('settings&headers=1');
+        window.__settingsSheet.catch(function () {});
       })();
     </script>
   </head>

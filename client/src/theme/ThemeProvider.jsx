@@ -21,6 +21,9 @@ export default function ThemeProvider({ children }) {
   // the sheet is then checked in the background and corrects it if the setting changed.
   const [theme, setTheme] = useState(() => preview ?? readCachedTheme() ?? 'none');
 
+  // First visit: index.html hides the page until the theme is known (no flash of the wrong design).
+  const [resolved, setResolved] = useState(() => preview !== null || readCachedTheme() !== null);
+
   useEffect(() => {
     if (preview) return; // URL preview wins over the sheet
     fetchSiteSettings()
@@ -29,20 +32,22 @@ export default function ThemeProvider({ children }) {
         writeCachedTheme(t);
         setTheme(t);
       })
-      .catch(() => {}); // offline / sheet unreachable: keep the cached theme
+      .catch(() => {}) // offline / sheet unreachable: keep the cached theme
+      .finally(() => setResolved(true));
   }, [preview]);
 
   useEffect(() => {
     const root = document.documentElement;
     if (theme === 'none') delete root.dataset.theme;
     else root.dataset.theme = theme;
+    if (resolved) delete root.dataset.themePending; // theme applied — show the page
 
     const meta = document.querySelector('meta[name="theme-color"]');
     if (meta) {
       meta.dataset.default ??= meta.content; // remember the normal brand colour from index.html
       meta.content = browserBarColors[theme] ?? meta.dataset.default;
     }
-  }, [theme]);
+  }, [theme, resolved]);
 
   const Decor = decorations[theme];
 
