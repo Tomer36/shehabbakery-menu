@@ -91,3 +91,56 @@
     transform: translateY(-2px);
   }
 }
+
+// ── Loading placeholders (same shape as the real cards) ─────────────
+.srOnly {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+.skCard {
+  background: $white;
+  border-radius: $radius-card;
+  overflow: hidden;
+  box-shadow: $shadow;
+}
+
+.skImg {
+  height: 180px;
+}
+
+.skBody {
+  padding: 14px 12px 18px;
+}
+
+.skLine {
+  display: block;
+  height: 12px;
+  border-radius: 6px;
+  margin-bottom: 9px;
+  margin-inline-end: auto; // hug the start (right) side like the real RTL text
+  width: 80%;
+}
+
+.skShort {
+  width: 50%;
+}
+
+.shimmer {
+  background: linear-gradient(90deg, #f1e7da 0%, #faf4ec 45%, #f1e7da 90%);
+  background-size: 200% 100%;
+  animation: shimmer 1.4s ease-in-out infinite;
+
+  @media (prefers-reduced-motion: reduce) {
+    animation: none;
+  }
+}
+
+@keyframes shimmer {
+  from { background-position: 100% 0; }
+  to   { background-position: -100% 0; }
+}

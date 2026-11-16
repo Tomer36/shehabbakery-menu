@@ -39,10 +39,27 @@ export default function App() {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
+  // Loading looks like the menu itself (tabs, hero, card placeholders), so the real
+  // content replaces it in place instead of the whole page jumping when it arrives.
   if (loading) return (
     <div className={s.page} data-theme-slot="page">
       <Header />
-      <div className={s.loading} data-theme-slot="loading">{lang === 'ar' ? 'جاري تحميل القائمة...' : 'טוען תפריט...'}</div>
+      <CategoryTabs categories={[]} items={[]} />
+      <main className={s.main}>
+        <SeasonalBanner />
+        <p className={s.srOnly} role="status">{lang === 'ar' ? 'جاري تحميل القائمة...' : 'טוען תפריט...'}</p>
+        <div className={s.grid} aria-hidden="true">
+          {Array.from({ length: 8 }, (_, i) => (
+            <div key={i} className={s.skCard}>
+              <div className={`${s.skImg} ${s.shimmer}`} />
+              <div className={s.skBody}>
+                <span className={`${s.skLine} ${s.shimmer}`} />
+                <span className={`${s.skLine} ${s.skShort} ${s.shimmer}`} />
+              </div>
+            </div>
+          ))}
+        </div>
+      </main>
     </div>
   );
 

@@ -58,3 +58,21 @@
   font-weight: 700;
   opacity: 0.75;
 }
+
+.placeholder {
+  height: 38px;
+  border-color: transparent;
+  background: linear-gradient(90deg, #f1e7da 0%, #faf4ec 45%, #f1e7da 90%);
+  background-size: 200% 100%;
+  animation: tabShimmer 1.4s ease-in-out infinite;
+  pointer-events: none;
+
+  @media (prefers-reduced-motion: reduce) {
+    animation: none;
+  }
+}
+
+@keyframes tabShimmer {
+  from { background-position: 100% 0; }
+  to   { background-position: -100% 0; }
+}

@@ -13,6 +13,10 @@ export default function CategoryTabs({ active, onChange, categories, items }) {
   return (
     <div className={s.wrapper} data-theme-slot="tabs">
       <div className={s.list}>
+        {/* placeholders while the menu loads, so the bar keeps its height and doesn't jump */}
+        {categories.length === 0 && [76, 96, 84, 104, 88].map((w, i) => (
+          <span key={i} className={`${s.tab} ${s.placeholder}`} style={{ width: w }} aria-hidden="true" />
+        ))}
         {categories.map((cat) => (
           <button
             key={cat.id}

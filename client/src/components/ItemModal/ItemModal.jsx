@@ -32,7 +32,7 @@ export default function ItemModal({ item, onClose }) {
           <button className={s.close} onClick={onClose}>✕</button>
         </div>
 
-        <div className={s.body}>
+        <div className={s.body} data-theme-slot="modal-body">
           <div className={s.header}>
             <h2 className={s.name}>{pick(item, 'name', lang)}</h2>
             {!item.sizes && <span className={s.price}>{fmt(item.price)}</span>}
